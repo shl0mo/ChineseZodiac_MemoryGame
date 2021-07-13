@@ -1,0 +1,119 @@
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+.tela {
+	position: relative;
+	margin: 10px auto;
+	height: 600px;
+	width: 960px;
+	-webkit-box-shadow: 0px 0px 12px rgba(0,0,0,0.2);
+	box-shadow: 0px 0px 12px rgba(0,0,0,0.2);
+}
+
+.tela img {
+	position: absolute;
+}
+
+.titulo {
+	position: absolute;
+	height: 186px;
+	width: 305px;
+	left: 327px;
+	top: 213px;
+}
+
+.container-botoes {
+	position: relative;
+	top: 483px;
+	width: 100%;
+	text-align: center;
+}
+
+.container-botoes button {
+	position: relative;
+	margin-right: 69px;
+}
+
+.botao {
+	background-color: black;
+	border: none;
+	color: white;
+	padding: 6px;
+	width: 371px;
+	border-radius: 8px;
+	font-size: 21pt;
+	font-family: Comic Sans MS, Sans;
+	text-align: center;
+	outline: 0;
+	cursor: pointer;
+}
+
+.box-jogo {
+	position: absolute;
+	margin-top: 78.5px;
+	margin-left: 24px;
+}
+
+.box-jogo div {
+	display: inline-block;
+}
+
+.carta {
+	position: relative;
+	height: 89px;
+	width: 141px;
+	margin: 10px 5px;
+	perspective: 900px;
+}
+
+.lado {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	border-radius: 15px;
+	transition: transform 500ms ease-in-out;
+	backface-visibility: hidden;
+}
+
+.costas {
+	background-image: url("../img/back_cartas.png");
+}
+
+.costas.virada {
+	transform: rotateY(180deg);
+}
+
+.frente {
+	transform: rotateY(-180deg);
+}
+
+.frente.virada {
+	transform: rotateY(0deg);
+}
+
+#div_cobertura {
+	position: absolute;
+	width: 920px;
+	height: 560px;
+	background-color: rgba(0,0,0,1);
+	margin: 20px;
+}
+
+.container-fim-jogo {
+	position: absolute;
+	display: block;
+	text-align: center;
+	top: 206.5px;
+	left: 289.5px;
+}
+
+.container-fim-jogo h1 {
+	font-family: Ebrima, Sans;
+	color: white;
+	font-size: 43pt;
+	margin: 30px;
+	text-shadow: 0px 0px 7px rgba(0,0,0,0.8);
+}
