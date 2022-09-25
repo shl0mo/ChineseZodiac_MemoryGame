@@ -4,7 +4,7 @@
 	margin: 0;
 }
 
-.tela {
+.canva {
 	position: relative;
 	margin: 10px auto;
 	height: 600px;
@@ -13,31 +13,23 @@
 	box-shadow: 0px 0px 12px rgba(0,0,0,0.2);
 }
 
-.tela img {
+.canva img {
 	position: absolute;
 }
 
-.titulo {
-	position: absolute;
-	height: 186px;
-	width: 305px;
-	left: 327px;
-	top: 213px;
-}
-
-.container-botoes {
+.container-buttons {
 	position: relative;
 	top: 483px;
 	width: 100%;
 	text-align: center;
 }
 
-.container-botoes button {
+.container-buttons button {
 	position: relative;
 	margin-right: 69px;
 }
 
-.botao {
+.button {
 	background-color: black;
 	border: none;
 	color: white;
@@ -51,17 +43,17 @@
 	cursor: pointer;
 }
 
-.box-jogo {
+.box-game {
 	position: absolute;
 	margin-top: 78.5px;
 	margin-left: 24px;
 }
 
-.box-jogo div {
+.box-game div {
 	display: inline-block;
 }
 
-.carta {
+.card {
 	position: relative;
 	height: 89px;
 	width: 141px;
@@ -69,7 +61,7 @@
 	perspective: 900px;
 }
 
-.lado {
+.side {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -78,31 +70,23 @@
 	backface-visibility: hidden;
 }
 
-.costas {
-	background-image: url("../img/back_cartas.png");
+.back {
+	background-image: url("../img/back_cards.png");
 }
 
-.costas.virada {
+.back.face_up {
 	transform: rotateY(180deg);
 }
 
-.frente {
+.front {
 	transform: rotateY(-180deg);
 }
 
-.frente.virada {
+.front.face_up {
 	transform: rotateY(0deg);
 }
 
-#div_cobertura {
-	position: absolute;
-	width: 920px;
-	height: 560px;
-	background-color: rgba(0,0,0,1);
-	margin: 20px;
-}
-
-.container-fim-jogo {
+.container-end-game {
 	position: absolute;
 	display: block;
 	text-align: center;
@@ -110,7 +94,7 @@
 	left: 289.5px;
 }
 
-.container-fim-jogo h1 {
+.container-end-game h1 {
 	font-family: Ebrima, Sans;
 	color: white;
 	font-size: 43pt;

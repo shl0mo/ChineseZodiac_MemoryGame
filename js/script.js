@@ -1,183 +1,182 @@
-let globais = {
+let globals = {
 	j: 1,
-	cartas_viradas: document.getElementsByClassName('virada'),
+	face_up_cards: document.getElementsByClassName('face_up'),
 };
 
-let imagens_internas = [];
-imagens_internas.push("0");
+let imgs_faces = [];
+imgs_faces.push('0');
 
 
 for (let i = 1; i <= 24; i++) {
 	if (i == 13) {
-		globais.j = 1;
+		globals.j = 1;
 	}
 	let img = {
-		src: "img/" + i + ".png",
-		id: globais.j,
+		src: 'img/' + i + '.png',
+		id: globals.j,
 	};
-	globais.j++;
-	imagens_internas.push(img);
+	globals.j++;
+	imgs_faces.push(img);
 }
 
-function embaralha_cartas(cartas_ordenadas) {
-	let cartas_embaralhadas = [];
-	cartas_embaralhadas.push("0");
-	while (cartas_embaralhadas.length != 25) {
-		let i = Math.floor(Math.random()*cartas_ordenadas.length);
-		let tem_card = false;
-		for (let j = 0; j < cartas_embaralhadas.length; j++) {
-			if (cartas_embaralhadas[j].src == cartas_ordenadas[i].src) {
-				tem_card = true;
+function shuffle(unshuffled_cards) {
+	let shuffled_cards = [];
+	shuffled_cards.push("0");
+	while (shuffled_cards.length != 25) {
+		let i = Math.floor(Math.random()*unshuffled_cards.length);
+		let have_card = false;
+		for (let j = 0; j < shuffled_cards.length; j++) {
+			if (shuffled_cards[j].src == unshuffled_cards[i].src) {
+				have_card = true;
 			}
 		}
-		if (tem_card == false) {
-			cartas_embaralhadas.push(cartas_ordenadas[i]);
+		if (have_card == false) {
+			shuffled_cards.push(unshuffled_cards[i]);
 		}
 	}
-	return cartas_embaralhadas;
+	return shuffled_cards;
 }
 
-function adiciona_evento_clique() {
-	let cartas = document.getElementsByClassName('carta');
-	for (let i = 0; i < cartas.length; i++) {
-		cartas[i].addEventListener('click', vira_carta, false);
-		cartas[i].setAttribute('draggable','false');
-		cartas[i].children[0].setAttribute('draggable','false');
+function add_click_event() {
+	let cards = document.getElementsByClassName('card');
+	for (let i = 0; i < cards.length; i++) {
+		cards[i].addEventListener('click', turn_card, false);
+		cards[i].setAttribute('draggable','false');
+		cards[i].children[0].setAttribute('draggable','false');
 	}
 }
 
-function cria_meu_principal() {
-	let  img_back_inicio = document.createElement('img');
-	img_back_inicio.setAttribute('src', 'img/back.png');
-	img_back_inicio.id = 'img-back-inicio';
-	document.getElementById('tela').appendChild(img_back_inicio);
-	let box_inicio = document.createElement('div');
-	box_inicio.className = 'box-inicio';
-	box_inicio.id = 'inicio';
-	document.getElementById('tela').appendChild(box_inicio);
-	let img_titulo = document.createElement('img');
-	let container_botoes = document.createElement('div');
-	container_botoes.className = 'container-botoes';
-	container_botoes.id = 'botoes';
-	box_inicio.appendChild(container_botoes);
-	let botao_jogar = document.createElement('button');
-	botao_jogar.className = 'botao-jogar botao';
-	botao_jogar.setAttribute('onclick', 'jogar()');
-	botao_jogar.innerHTML = 'Jogar';
-	container_botoes.appendChild(botao_jogar);
+function create_main_menu() {
+	let  img_back_menu = document.createElement('img');
+	img_back_menu.setAttribute('src', 'img/back.png');
+	img_back_menu.id = 'img-back-menu';
+	document.getElementById('canva').appendChild(img_back_menu);
+	let box_menu = document.createElement('div');
+	box_menu.className = 'box-menu';
+	box_menu.id = 'id-box-menu';
+	document.getElementById('canva').appendChild(box_menu);
+	let container_buttons = document.createElement('div');
+	container_buttons.className = 'container-buttons';
+	container_buttons.id = 'id-container-buttons';
+	box_menu.appendChild(container_buttons);
+	let play_button = document.createElement('button');
+	play_button.className = 'play-button button';
+	play_button.setAttribute('onclick', 'play()');
+	play_button.innerHTML = 'Play';
+	container_buttons.appendChild(play_button);
 }
 
-function verifica_cartas() {
-	globais.cartas_viradas = document.getElementsByClassName('virada');
-	if (globais.cartas_viradas.length == 4) {
-		let id = globais.cartas_viradas[1].id;
-		if (globais.cartas_viradas[1].id == globais.cartas_viradas[3].id ) {
-			$('#tela').removeAttr('onclick');
-			let carta_1_costas = globais.cartas_viradas[0];
-			let carta_1_frente = globais.cartas_viradas[1];
-			let carta_2_costas = globais.cartas_viradas[2];
-			let carta_2_frente = globais.cartas_viradas[3];
-			carta_1_frente.parentNode.removeEventListener('click',vira_carta,false);
-			carta_2_frente.parentNode.removeEventListener('click',vira_carta,false);
-			let id = globais.cartas_viradas[1].id;
+function verify_cards() {
+	globals.face_up_cards = document.getElementsByClassName('face_up');
+	if (globals.face_up_cards.length == 4) {
+		let id = globals.face_up_cards[1].id;
+		if (globals.face_up_cards[1].id == globals.face_up_cards[3].id) {
+			$('#canva').removeAttr('onclick');
+			let card_1_back = globals.face_up_cards[0];
+			let card_1_front = globals.face_up_cards[1];
+			let card_2_back = globals.face_up_cards[2];
+			let card_2_front = globals.face_up_cards[3];
+			card_1_front.parentNode.removeEventListener('click',turn_card,false);
+			card_2_front.parentNode.removeEventListener('click',turn_card,false);
+			//let id = globals.face_up_cards[1].id;
 			setTimeout(function() {
-				carta_1_frente.parentNode.style.visibility = 'hidden';
-				carta_2_frente.parentNode.style.visibility = 'hidden';
-				carta_1_frente.parentNode.setAttribute('class', 'carta ok');
-				carta_2_frente.parentNode.setAttribute('class', 'carta ok');
-				carta_1_costas.setAttribute('class', 'lado');
-				carta_1_frente.setAttribute('class', 'lado');
-				carta_2_costas.setAttribute('class', 'lado');
-				carta_2_frente.setAttribute('class', 'lado');
-				globais.cartas_viradas = document.getElementsByClassName("nao_existe");
-				document.getElementById('tela').setAttribute('onclick', 'verifica_cartas()');
-				let encontrados = document.getElementsByClassName("ok");
-				if (encontrados.length == 24) {
-					let fundo_fim_jogo = document.createElement('img');
-					fundo_fim_jogo.id = 'img-back-fim';
-					fundo_fim_jogo.src = 'img/back_endgame.png';
-					document.getElementById('tela').appendChild(fundo_fim_jogo);
-					let div_fim_jogo = document.createElement('div');
-					div_fim_jogo.id = 'container-fim-jogo';
-					div_fim_jogo.className = 'container-fim-jogo';
-					document.getElementById('tela').appendChild(div_fim_jogo);
-					mensagem_final = document.createElement('h1');
-					mensagem_final.id = 'mensagem_final';
-					div_fim_jogo.appendChild(mensagem_final);
-					document.getElementById('mensagem_final').innerHTML = "Fim de jogo";
-					let botao_menu = document.createElement('button');
-					botao_menu.className = 'botao-volta-menu botao';
-					botao_menu.id = 'botao-volta-menu';
-					botao_menu.setAttribute('onclick', 'volta_menu()');
-					div_fim_jogo.appendChild(botao_menu);
-					document.getElementById('botao-volta-menu').innerHTML = "Início";
+				card_1_front.parentNode.style.visibility = 'hidden';
+				card_2_front.parentNode.style.visibility = 'hidden';
+				card_1_front.parentNode.setAttribute('class', 'card ok');
+				card_2_front.parentNode.setAttribute('class', 'card ok');
+				card_1_back.setAttribute('class', 'side');
+				card_1_front.setAttribute('class', 'side');
+				card_2_back.setAttribute('class', 'side');
+				card_2_front.setAttribute('class', 'side');
+				globals.face_up_cards = document.getElementsByClassName('doesnt_exists');
+				document.getElementById('canva').setAttribute('onclick', 'verify_cards()');
+				let found = document.getElementsByClassName('ok');
+				if (found.length == 24) {
+					let back_end_game = document.createElement('img');
+					back_end_game.id = 'img-back-fim';
+					back_end_game.src = 'img/back_endgame.png';
+					document.getElementById('canva').appendChild(back_end_game);
+					let div_end_game = document.createElement('div');
+					div_end_game.id = 'container-end-game';
+					div_end_game.className = 'container-end-game';
+					document.getElementById('canva').appendChild(div_end_game);
+					final_message = document.createElement('h1');
+					final_message.id = 'final-message';
+					div_end_game.appendChild(final_message);
+					document.getElementById('final-message').innerHTML = 'Game Over';
+					let menu_button = document.createElement('button');
+					menu_button.className = 'button-back-menu button';
+					menu_button.id = 'button-back-menu';
+					menu_button.setAttribute('onclick', 'back_to_menu()');
+					div_end_game.appendChild(menu_button);
+					document.getElementById('button-back-menu').innerHTML = 'Main Menu';
 				}
 			}, 1250);
 		} else {
-			function desvira_cartas() {
-				while (globais.cartas_viradas.length != 0) {
-					globais.cartas_viradas[0].parentNode.addEventListener('click',vira_carta,false);
-					globais.cartas_viradas[0].classList.toggle('virada');
+			function turn_over_cards() {
+				while (globals.face_up_cards.length != 0) {
+					globals.face_up_cards[0].parentNode.addEventListener('click',turn_card,false);
+					globals.face_up_cards[0].classList.toggle('face_up');
 				}
 			}
-			setTimeout(desvira_cartas, 1450);
+			setTimeout(turn_over_cards, 1450);
 		}
 	}
 }
 
-function eventos_cartas() {
-	imagens_internas = embaralha_cartas(imagens_internas);
-	let frente_cards = document.getElementsByClassName('frente');
+function cards_events() {
+	imgs_faces = shuffle(imgs_faces);
+	let front_cards = document.getElementsByClassName('front');
 	let j = 0;
 	for (let i = 1; i <= 24; i++) {
-		frente_cards[j].style.backgroundImage = "url('" + imagens_internas[i].src + "')";
-		frente_cards[j].setAttribute('draggable','false');
-		frente_cards[j].setAttribute('id', imagens_internas[i].id);
+		front_cards[j].style.backgroundImage = "url('" + imgs_faces[i].src + "')";
+		front_cards[j].setAttribute('draggable','false');
+		front_cards[j].setAttribute('id', imgs_faces[i].id);
 		j++;
 	}
-	adiciona_evento_clique();
+	add_click_event();
 }
 
-function vira_carta() {
-	let lados = this.getElementsByClassName('lado');
-	id = lados[0].parentNode.id;
+function turn_card() {
+	let sides = this.getElementsByClassName('side');
+	id = sides[0].parentNode.id;
 	num_id = id.split('-')[1];
-	if (globais.cartas_viradas.length < 4) {
-		lados[0].classList.toggle('virada');
-		lados[1].classList.toggle('virada');
-		document.getElementById(id).removeEventListener('click',vira_carta,false);
+	if (globals.face_up_cards.length < 4) {
+		sides[0].classList.toggle('face_up');
+		sides[1].classList.toggle('face_up');
+		document.getElementById(id).removeEventListener('click',turn_card,false);
 	}
 }
 
-function jogar() {
-	document.getElementById('tela').style.backgroundColor = 'white';
-	$('#inicio').hide(150);
-	$('.tela img').hide(150);
+function play() {
+	document.getElementById('canva').style.backgroundColor = 'white';
+	$('#id-box-menu').hide(150);
+	$('.canva img').hide(150);
 	setTimeout(function() {
-		$('#inicio').remove();
-		let box_jogo = document.createElement('div');
-		box_jogo.className = 'box-jogo';
-		box_jogo.id = 'jogo';
-		document.getElementById('tela').appendChild(box_jogo);
+		$('#start').remove();
+		let box_game = document.createElement('div');
+		box_game.className = 'box-game';
+		box_game.id = 'game';
+		document.getElementById('canva').appendChild(box_game);
 		for (let i = 1; i <= 24; i++) {
-			let carta = document.createElement('div');
-			carta.className = 'carta';
-			carta.id = 'carta-' + i;
-			box_jogo.appendChild(carta);
-			let costas = document.createElement('div');
-			costas.className = 'lado costas';
-			carta.appendChild(costas);
-			let frente = document.createElement('div');
-			frente.className = 'lado frente';
-			carta.appendChild(frente);
+			let card = document.createElement('div');
+			card.className = 'card';
+			card.id = 'card-' + i;
+			box_game.appendChild(card);
+			let back = document.createElement('div');
+			back.className = 'side back';
+			card.appendChild(back);
+			let front = document.createElement('div');
+			front.className = 'side front';
+			card.appendChild(front);
 		}
-		eventos_cartas();
+		cards_events();
 	}, 100);
 }
 
-function volta_menu() {
-	$('.box-jogo').hide();
-	$('.box-jogo').remove();
-	cria_meu_principal();
-	$('.container-fim-jogo').remove();
+function back_to_menu() {
+	$('.box-game').hide();
+	$('.box-game').remove();
+	create_main_menu();
+	$('.container-end-game').remove();
 }
